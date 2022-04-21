@@ -1,0 +1,2404 @@
+type Query {
+  """
+  Return list of all emojis
+  """
+  emojis: [CommonEmojiNode!]
+
+  departments(offset: Int, before: String, after: String, first: Int, last: Int): DepartmentNodeConnection
+
+  masterclasses(offset: Int, before: String, after: String, first: Int, last: Int, department: ID): MasterClassNodeConnection
+
+  chatToken: ChatToken
+
+  """
+  Retrieve the credit card information that was previously saved to a specific account.
+  """
+  creditCardInfo: JSONString
+
+  """
+  Return Project Comment Reply connection for authenticated user with pagination information.
+  """
+  projectCommentReplies(sort: String, commentId: ID!, offset: Int, before: String, after: String, first: Int, last: Int, projectId: ID): ProjectCommentReplyNodeConnection
+
+  projectComment(commentId: ID!): GetProjectCommentNode
+
+  """
+  Return list of project comments connection for authenticated user with pagination information.
+  """
+  projectComments(sort: String, offset: Int, before: String, after: String, first: Int, last: Int, projectId: ID): ProjectCommentNodeConnection
+
+  """
+  Return Project Ratings Emoji Count connection for authenticated user with pagination information.
+  """
+  projectEmojiCount(projectId: ID!): [ProjectEmojiCountNode]
+
+  """
+  Return Project Ratings connection for authenticated user with pagination information.
+  """
+  projectRatings(offset: Int, before: String, after: String, first: Int, last: Int, projectId: ID, emojiId: ID): ProjectRatingNodeConnection
+
+  """
+  Get project media for a single Project
+  """
+  projectMedia(uuid: ID!): [ProjectMediaNode!]
+
+  """
+  Return a list of all Genres
+  """
+  genres(offset: Int, before: String, after: String, first: Int, last: Int): GenreNodeConnection
+
+  """
+  Return Trending Project for authenticated user with pagination information.
+  """
+  trendingProjects(offset: Int, before: String, after: String, first: Int, last: Int): AuthenticatedUserTrendingProjectNodeConnection
+
+  """
+  Return Project connection for authenticated user with pagination information.
+  """
+  projects(offset: Int, before: String, after: String, first: Int, last: Int, creator_Uuid: UUID, genre: [ID]): AuthenticatedUserProjectNodeConnection
+
+  """
+  Return a single Project Item
+  """
+  project(id: ID!): AuthenticatedUserProjectNode
+
+  receivedFollowRequests(before: String, after: String, first: Int, last: Int): CommonFollowRequestNodeConnection
+
+  notificationSettings: AuthenticatedUserNotificationsSettingsNode
+
+  blockedUsers(offset: Int, before: String, after: String, first: Int, last: Int, query: String, "Ordering" orderBy: String): BlockedUsersUserNodeConnection
+
+  followers(offset: Int, before: String, after: String, first: Int, last: Int, query: String, "Ordering" orderBy: String): FollowersUserNodeConnection
+
+  followings(offset: Int, before: String, after: String, first: Int, last: Int, query: String, "Ordering" orderBy: String): FollowingsUserNodeConnection
+
+  me: GetAuthenticatedUserNode
+
+  getUser(uuid: String): GetUserUserNode
+
+  searchUsers(offset: Int, before: String, after: String, first: Int, last: Int, query: String, "Ordering" orderBy: String): SearchUsersUserNodeConnection
+
+  studioRoles: [StudioRoleNode!]
+}
+
+type CommonEmojiNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  keyword: String!
+
+  image: FileField
+
+  color: String!
+
+  created: DateTime!
+
+  order: Int!
+}
+
+"""
+An object with an ID
+"""
+interface Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+}
+
+scalar FileField
+
+"""
+The `DateTime` scalar type represents a DateTime
+value as specified by
+[iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+"""
+scalar DateTime
+
+type DepartmentNodeConnection {
+  """
+  Pagination data for this connection.
+  """
+  pageInfo: PageInfo!
+
+  """
+  Contains the nodes in this connection.
+  """
+  edges: [DepartmentNodeEdge]!
+}
+
+"""
+The Relay compliant `PageInfo` type, containing data necessary to paginate this connection.
+"""
+type PageInfo {
+  """
+  When paginating forwards, are there more items?
+  """
+  hasNextPage: Boolean!
+
+  """
+  When paginating backwards, are there more items?
+  """
+  hasPreviousPage: Boolean!
+
+  """
+  When paginating backwards, the cursor to continue.
+  """
+  startCursor: String
+
+  """
+  When paginating forwards, the cursor to continue.
+  """
+  endCursor: String
+}
+
+"""
+A Relay edge containing a `DepartmentNode` and its cursor.
+"""
+type DepartmentNodeEdge {
+  """
+  The item at the end of the edge
+  """
+  node: DepartmentNode
+
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+}
+
+type DepartmentNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  name: String!
+}
+
+type MasterClassNodeConnection {
+  """
+  Pagination data for this connection.
+  """
+  pageInfo: PageInfo!
+
+  """
+  Contains the nodes in this connection.
+  """
+  edges: [MasterClassNodeEdge]!
+}
+
+"""
+A Relay edge containing a `MasterClassNode` and its cursor.
+"""
+type MasterClassNodeEdge {
+  """
+  The item at the end of the edge
+  """
+  node: MasterClassNode
+
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+}
+
+type MasterClassNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  speakers(offset: Int, before: String, after: String, first: Int, last: Int): SpeakerNodeConnection
+
+  uuid: UUID!
+
+  title: String!
+
+  description: String!
+
+  isNewEpisode: Boolean!
+
+  width: Int
+
+  height: Int
+
+  duration: Float
+
+  file: FileField
+
+  department: DepartmentNode
+
+  thumbnail: FileField
+
+  thumbnailWidth: Int
+
+  thumbnailHeight: Int
+
+  modified: DateTime!
+
+  created: DateTime!
+}
+
+type SpeakerNodeConnection {
+  """
+  Pagination data for this connection.
+  """
+  pageInfo: PageInfo!
+
+  """
+  Contains the nodes in this connection.
+  """
+  edges: [SpeakerNodeEdge]!
+}
+
+"""
+A Relay edge containing a `SpeakerNode` and its cursor.
+"""
+type SpeakerNodeEdge {
+  """
+  The item at the end of the edge
+  """
+  node: SpeakerNode
+
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+}
+
+type SpeakerNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  name: String!
+
+  avatar: FileField
+}
+
+"""
+Leverages the internal Python implmeentation of UUID (uuid.UUID) to provide native UUID objects
+in fields, resolvers and input.
+"""
+scalar UUID
+
+type ChatToken {
+  token: String
+}
+
+"""
+Allows use of a JSON String for input / output from the GraphQL schema.
+
+Use of this type is *not recommended* as you lose the benefits of having a defined, static
+schema (one of the key benefits of GraphQL).
+"""
+scalar JSONString
+
+type ProjectCommentReplyNodeConnection {
+  """
+  Pagination data for this connection.
+  """
+  pageInfo: PageInfo!
+
+  """
+  Contains the nodes in this connection.
+  """
+  edges: [ProjectCommentReplyNodeEdge]!
+}
+
+"""
+A Relay edge containing a `ProjectCommentReplyNode` and its cursor.
+"""
+type ProjectCommentReplyNodeEdge {
+  """
+  The item at the end of the edge
+  """
+  node: ProjectCommentReplyNode
+
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+}
+
+type ProjectCommentReplyNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  created: DateTime!
+
+  commenter: CommonPublicUserNode
+
+  text: String!
+
+  isEdited: Boolean!
+
+  parentComment: ProjectCommentReplyParentNode
+}
+
+type CommonPublicUserNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  uuid: UUID!
+
+  visibility: String!
+
+  """
+  Required. 30 characters or fewer. Letters, digits and _ only.
+  """
+  username: String!
+
+  profile: CommonPublicUserProfileNode
+
+  isFollowing: Boolean
+
+  isFollowed: Boolean
+}
+
+type CommonPublicUserProfileNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  name: String!
+
+  avatar: FileField
+
+  cover: FileField
+}
+
+type ProjectCommentReplyParentNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+}
+
+type GetProjectCommentNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  created: DateTime!
+
+  commenter: CommonPublicUserNode
+
+  text: String!
+
+  isEdited: Boolean!
+
+  repliesCount: Int
+}
+
+type ProjectCommentNodeConnection {
+  """
+  Pagination data for this connection.
+  """
+  pageInfo: PageInfo!
+
+  """
+  Contains the nodes in this connection.
+  """
+  edges: [ProjectCommentNodeEdge]!
+}
+
+"""
+A Relay edge containing a `ProjectCommentNode` and its cursor.
+"""
+type ProjectCommentNodeEdge {
+  """
+  The item at the end of the edge
+  """
+  node: ProjectCommentNode
+
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+}
+
+type ProjectCommentNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  created: DateTime!
+
+  commenter: CommonPublicUserNode
+
+  text: String!
+
+  isEdited: Boolean!
+
+  replies: [ProjectCommentReplyNode]
+
+  repliesCount: Int
+}
+
+type ProjectEmojiCountNode {
+  emoji: ProjectRatingEmojiNode
+
+  count: Int
+}
+
+type ProjectRatingEmojiNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  keyword: String!
+
+  image: FileField
+
+  created: DateTime!
+}
+
+type ProjectRatingNodeConnection {
+  """
+  Pagination data for this connection.
+  """
+  pageInfo: PageInfo!
+
+  """
+  Contains the nodes in this connection.
+  """
+  edges: [ProjectRatingNodeEdge]!
+}
+
+"""
+A Relay edge containing a `ProjectRatingNode` and its cursor.
+"""
+type ProjectRatingNodeEdge {
+  """
+  The item at the end of the edge
+  """
+  node: ProjectRatingNode
+
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+}
+
+type ProjectRatingNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  created: DateTime!
+
+  evaluator: ProjectRatingEvaluatorNode
+
+  emoji: ProjectRatingEmojiNode
+}
+
+type ProjectRatingEvaluatorNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  """
+  Required. 30 characters or fewer. Letters, digits and _ only.
+  """
+  username: String!
+
+  profile: ProjectEvaluatorProfileNode
+}
+
+type ProjectEvaluatorProfileNode implements Node {
+  avatar: FileField
+
+  """
+  The ID of the object.
+  """
+  id: ID!
+}
+
+type ProjectMediaNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  order: Int!
+
+  type: ProjectMediaType!
+
+  contentObject: ProjectVideoNode
+}
+
+"""
+An enumeration.
+"""
+enum ProjectMediaType {
+  """
+  Video
+  """
+  V
+}
+
+type ProjectVideoNode implements Node {
+  width: Int
+
+  height: Int
+
+  duration: Float
+
+  file: FileField
+
+  thumbnail: FileField
+
+  thumbnailWidth: Int!
+
+  thumbnailHeight: Int!
+
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  formatSet: [ProjectVideoFormatNode!]
+}
+
+type ProjectVideoFormatNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  progress: Int!
+
+  format: String!
+
+  file: FileField
+
+  width: Int
+
+  height: Int
+
+  duration: Int
+}
+
+type GenreNodeConnection {
+  """
+  Pagination data for this connection.
+  """
+  pageInfo: PageInfo!
+
+  """
+  Contains the nodes in this connection.
+  """
+  edges: [GenreNodeEdge]!
+}
+
+"""
+A Relay edge containing a `GenreNode` and its cursor.
+"""
+type GenreNodeEdge {
+  """
+  The item at the end of the edge
+  """
+  node: GenreNode
+
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+}
+
+type GenreNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  """
+  Enter a project genre (e.g. Science Fiction)
+  """
+  title: String!
+
+  cover: FileField
+
+  projectsCount: Int
+}
+
+type AuthenticatedUserTrendingProjectNodeConnection {
+  """
+  Pagination data for this connection.
+  """
+  pageInfo: PageInfo!
+
+  """
+  Contains the nodes in this connection.
+  """
+  edges: [AuthenticatedUserTrendingProjectNodeEdge]!
+}
+
+"""
+A Relay edge containing a `AuthenticatedUserTrendingProjectNode` and its cursor.
+"""
+type AuthenticatedUserTrendingProjectNodeEdge {
+  """
+  The item at the end of the edge
+  """
+  node: AuthenticatedUserTrendingProjectNode
+
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+}
+
+type AuthenticatedUserTrendingProjectNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  project(offset: Int, before: String, after: String, first: Int, last: Int, creator_Uuid: UUID, genre: [ID]): AuthenticatedUserProjectNodeConnection
+
+  created: DateTime!
+}
+
+type AuthenticatedUserProjectNodeConnection {
+  """
+  Pagination data for this connection.
+  """
+  pageInfo: PageInfo!
+
+  """
+  Contains the nodes in this connection.
+  """
+  edges: [AuthenticatedUserProjectNodeEdge]!
+}
+
+"""
+A Relay edge containing a `AuthenticatedUserProjectNode` and its cursor.
+"""
+type AuthenticatedUserProjectNodeEdge {
+  """
+  The item at the end of the edge
+  """
+  node: AuthenticatedUserProjectNode
+
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+}
+
+type AuthenticatedUserProjectNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  uuid: UUID!
+
+  title: String
+
+  description: String
+
+  isEdited: Boolean!
+
+  creator: CommonPublicUserNode
+
+  genre: [GenreNode!]
+
+  """
+  Designates whether an NFT is minted for this project.
+  """
+  protected: Boolean!
+
+  """
+  Designates whether the project is open for investment
+  """
+  investable: Boolean!
+
+  created: DateTime!
+
+  mediaHeight: Int
+
+  mediaWidth: Int
+
+  mediaThumbnail: FileField
+
+  collaborators(offset: Int, before: String, after: String, first: Int, last: Int): CommonPublicUserNodeConnection
+
+  attachments: [ProjectAttachmentNode!]
+
+  commentsCount: Int
+
+  ratingsEmojiCounts: [ProjectEmojiCountNode]
+
+  rating: ProjectRatingNode
+
+  watchlisted: Boolean
+
+  media: [ProjectMediaNode!]
+}
+
+type CommonPublicUserNodeConnection {
+  """
+  Pagination data for this connection.
+  """
+  pageInfo: PageInfo!
+
+  """
+  Contains the nodes in this connection.
+  """
+  edges: [CommonPublicUserNodeEdge]!
+}
+
+"""
+A Relay edge containing a `CommonPublicUserNode` and its cursor.
+"""
+type CommonPublicUserNodeEdge {
+  """
+  The item at the end of the edge
+  """
+  node: CommonPublicUserNode
+
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+}
+
+type ProjectAttachmentNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  file: FileField
+
+  created: DateTime!
+}
+
+type CommonFollowRequestNodeConnection {
+  """
+  Pagination data for this connection.
+  """
+  pageInfo: PageInfo!
+
+  """
+  Contains the nodes in this connection.
+  """
+  edges: [CommonFollowRequestNodeEdge]!
+}
+
+"""
+A Relay edge containing a `CommonFollowRequestNode` and its cursor.
+"""
+type CommonFollowRequestNodeEdge {
+  """
+  The item at the end of the edge
+  """
+  node: CommonFollowRequestNode
+
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+}
+
+type CommonFollowRequestNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  creator: CommonPublicUserNode
+
+  targetUser: CommonPublicUserNode
+}
+
+type AuthenticatedUserNotificationsSettingsNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  projectRatingNotifications: Boolean!
+
+  followNotifications: Boolean!
+
+  followRequestNotifications: Boolean!
+
+  followRequestApprovedNotifications: Boolean!
+
+  userNewProjectNotifications: Boolean!
+}
+
+type BlockedUsersUserNodeConnection {
+  """
+  Pagination data for this connection.
+  """
+  pageInfo: PageInfo!
+
+  """
+  Contains the nodes in this connection.
+  """
+  edges: [BlockedUsersUserNodeEdge]!
+}
+
+"""
+A Relay edge containing a `BlockedUsersUserNode` and its cursor.
+"""
+type BlockedUsersUserNodeEdge {
+  """
+  The item at the end of the edge
+  """
+  node: BlockedUsersUserNode
+
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+}
+
+type BlockedUsersUserNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  """
+  Required. 30 characters or fewer. Letters, digits and _ only.
+  """
+  username: String!
+
+  profile: BlockedUsersUserProfileNode
+}
+
+type BlockedUsersUserProfileNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  name: String!
+
+  avatar: FileField
+}
+
+type FollowersUserNodeConnection {
+  """
+  Pagination data for this connection.
+  """
+  pageInfo: PageInfo!
+
+  """
+  Contains the nodes in this connection.
+  """
+  edges: [FollowersUserNodeEdge]!
+}
+
+"""
+A Relay edge containing a `FollowersUserNode` and its cursor.
+"""
+type FollowersUserNodeEdge {
+  """
+  The item at the end of the edge
+  """
+  node: FollowersUserNode
+
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+}
+
+type FollowersUserNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  """
+  Required. 30 characters or fewer. Letters, digits and _ only.
+  """
+  username: String!
+
+  profile: FollowersUserProfileNode
+
+  isFollowing: Boolean
+
+  isFollowed: Boolean
+}
+
+type FollowersUserProfileNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  name: String!
+
+  avatar: FileField
+}
+
+type FollowingsUserNodeConnection {
+  """
+  Pagination data for this connection.
+  """
+  pageInfo: PageInfo!
+
+  """
+  Contains the nodes in this connection.
+  """
+  edges: [FollowingsUserNodeEdge]!
+}
+
+"""
+A Relay edge containing a `FollowingsUserNode` and its cursor.
+"""
+type FollowingsUserNodeEdge {
+  """
+  The item at the end of the edge
+  """
+  node: FollowingsUserNode
+
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+}
+
+type FollowingsUserNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  """
+  Required. 30 characters or fewer. Letters, digits and _ only.
+  """
+  username: String!
+
+  profile: FollowingsUserProfileNode
+
+  isFollowing: Boolean
+}
+
+type FollowingsUserProfileNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  name: String!
+
+  avatar: FileField
+}
+
+type GetAuthenticatedUserNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  uuid: UUID!
+
+  visibility: String!
+
+  """
+  Required. 30 characters or fewer. Letters, digits and _ only.
+  """
+  username: String!
+
+  profile: GetAuthenticatedUserProfileNode
+
+  dateJoined: DateTime!
+
+  email: String!
+
+  phoneNumber: String!
+
+  inviteCount: Int!
+
+  workExperiences: [WorkExperiencesNode!]
+
+  account: GetAuthenticatedUserAccountNode
+
+  unreadNotificationsCount: Int
+
+  followersCount: Int
+
+  followingCount: Int
+
+  projectsCount: Int
+
+  activeModerationPenaltiesCount: Int
+}
+
+type GetAuthenticatedUserProfileNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  name: String!
+
+  avatar: FileField
+
+  cover: FileField
+
+  biography: String
+
+  url: String
+
+  location: String
+
+  studio: UserStudioNode
+
+  dateOfBirth: Date
+
+  gender: UserProfileGender
+
+  ethnicity: UserProfileEthnicity
+
+  education: UserProfileEducation
+
+  completeness: String
+}
+
+type UserStudioNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  name: String!
+
+  email: String!
+
+  role: StudioRoleNode
+
+  imdb: String
+
+  linkedin: String
+}
+
+type StudioRoleNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  """
+  Enter a studio role (e.g. Content Research Analyst)
+  """
+  title: String!
+}
+
+"""
+The `Date` scalar type represents a Date
+value as specified by
+[iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+"""
+scalar Date
+
+"""
+An enumeration.
+"""
+enum UserProfileGender {
+  """
+  Male
+  """
+  MALE
+
+  """
+  Female
+  """
+  FEMALE
+
+  """
+  Non-Binary
+  """
+  NON_BINARY
+
+  """
+  Other
+  """
+  OTHER
+}
+
+"""
+An enumeration.
+"""
+enum UserProfileEthnicity {
+  """
+  Native American or Indigenous
+  """
+  NATIVE_AMERICAN_INDIGENOUS
+
+  """
+  Asian
+  """
+  ASIAN
+
+  """
+  Black or African American
+  """
+  BLACK_AFRICAN_AMERICAN
+
+  """
+  Native Hawaiian or Other Pacific Islander
+  """
+  HAWAIIAN_PACIFIC_ISLANDER
+
+  """
+  Hispanic or Latino
+  """
+  LATINX_HISPANIC
+
+  """
+  White
+  """
+  WHITE
+
+  """
+  Other
+  """
+  OTHER
+}
+
+"""
+An enumeration.
+"""
+enum UserProfileEducation {
+  """
+  High School
+  """
+  HS
+
+  """
+  Some College
+  """
+  SC
+
+  """
+  Undergraduate
+  """
+  UG
+
+  """
+  Graduate
+  """
+  GR
+}
+
+type WorkExperiencesNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  title: String!
+
+  company: String
+
+  location: String
+
+  active: Boolean!
+
+  beginDate: DateTime!
+
+  endDate: DateTime
+}
+
+type GetAuthenticatedUserAccountNode {
+  """
+  Unique identifier code for the Account
+  """
+  ncAccountId: String
+
+  """
+  ID for the issuer
+  """
+  ncIssuerId: String
+
+  """
+  Unique identifier code for the party
+  """
+  ncPartyId: String
+
+  """
+  Unique identifier code for the Link
+  """
+  ncLinkId: String
+}
+
+type GetUserUserNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  visibility: String!
+
+  """
+  Required. 30 characters or fewer. Letters, digits and _ only.
+  """
+  username: String!
+
+  profile: GetUserUserProfileNode
+
+  dateJoined: DateTime!
+
+  followersCount: Int
+
+  followingCount: Int
+
+  projectsCount: Int
+
+  isFollowing: Boolean
+
+  isFollowed: Boolean
+
+  areNewProjectNotificationsEnabled: Boolean
+
+  isPendingFollowRequestApproval: Boolean
+
+  isFollowRequested: Boolean
+
+  isReported: Boolean
+}
+
+type GetUserUserProfileNode implements Node {
+  name: String!
+
+  avatar: FileField
+
+  cover: FileField
+
+  biography: String
+
+  url: String
+
+  location: String
+
+  """
+  The ID of the object.
+  """
+  id: ID!
+}
+
+type SearchUsersUserNodeConnection {
+  """
+  Pagination data for this connection.
+  """
+  pageInfo: PageInfo!
+
+  """
+  Contains the nodes in this connection.
+  """
+  edges: [SearchUsersUserNodeEdge]!
+}
+
+"""
+A Relay edge containing a `SearchUsersUserNode` and its cursor.
+"""
+type SearchUsersUserNodeEdge {
+  """
+  The item at the end of the edge
+  """
+  node: SearchUsersUserNode
+
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+}
+
+type SearchUsersUserNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  visibility: String!
+
+  """
+  Required. 30 characters or fewer. Letters, digits and _ only.
+  """
+  username: String!
+
+  profile: SearchUsersUserProfileNode
+
+  isFollowing: Boolean
+
+  areNewProjectNotificationsEnabled: Boolean
+}
+
+type SearchUsersUserProfileNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  name: String!
+
+  avatar: FileField
+
+  cover: FileField
+}
+
+type Mutation {
+  """
+  Creates an individual party, account and link between entities
+  """
+  createInvestorAccount(input: CreateInvestorAccountInput!): CreateInvestorAccountPayload
+
+  """
+  Upload a document to a particular individual party (createParty)
+  """
+  addPartyDocument(document: Upload!, "Document type. default: Driver License" type: String): AddPartyDocument
+
+  """
+  Create a trade/investment for an offering
+  """
+  createTrade(input: CreateTradeInput!): CreateTradePayload
+
+  """
+  Perform an online credit card transaction.
+  """
+  ccFundMovement(input: CCFundMovementInput!): CCFundMovementPayload
+
+  """
+  Request funds be returned to an investor
+  """
+  fundReturnRequest(input: FundReturnRequestInput!): FundReturnRequestPayload
+
+  """
+  Add a media object to a single project
+  """
+  addProjectMedia(file: Upload!, order: Int, uuid: ID!): AddProjectMedia
+
+  """
+  Add rating to a single project
+  """
+  addProjectRating(input: AddProjectRatingInput!): AddProjectRatingPayload
+
+  """
+  Delete rating for a single project
+  """
+  deleteRating(input: ProjectRatingItemInput!): ProjectRatingItemPayload
+
+  """
+  Delete project
+  """
+  deleteProject(input: DeleteProjectItemInput!): DeleteProjectItemPayload
+
+  """
+  Update a single project
+  """
+  updateProject(input: UpdateProjectItemInput!): UpdateProjectItemPayload
+
+  """
+  Create a single project
+  """
+  createProject(description: String, genreIds: [String]!, thumbnail: Upload!, title: String, video: Upload!): CreateProject
+
+  """
+  Add project to watchlist
+  """
+  addToWatchlist(input: AddToWatchListInput!): AddToWatchListPayload
+
+  """
+  Add project supported documents
+  """
+  addAttachments(documents: [Upload], id: ID!): AddAttachment
+
+  """
+  Remove project from watchlist
+  """
+  removeFromWatchlist(input: RemoveFromWatchlistInput!): RemoveFromWatchlistPayload
+
+  """
+  Add a comment to a single project
+  """
+  addComment(input: CreateProjectCommentInput!): CreateProjectCommentPayload
+
+  """
+  Update a single comment on a project
+  """
+  updateComment(input: UpdateCommentItemInput!): UpdateCommentItemPayload
+
+  """
+  Delete comment on a single project
+  """
+  deleteComment(input: DeleteCommentItemInput!): DeleteCommentItemPayload
+
+  """
+  Reply to a single comment on a project
+  """
+  replyComment(input: ProjectCommentReplyInput!): ProjectCommentReplyPayload
+
+  requestToFollowUser(input: RequestToFollowUserInput!): RequestToFollowUserPayload
+
+  cancelRequestToFollowUser(input: CancelRequestToFollowUserInput!): CancelRequestToFollowUserPayload
+
+  approveUserFollowRequest(input: ApproveUserFollowRequestInput!): ApproveUserFollowRequestPayload
+
+  rejectUserFollowRequest(input: RejectUserFollowRequestInput!): RejectUserFollowRequestPayload
+
+  followUser(input: FollowUserInput!): FollowUserPayload
+
+  unfollowUser(input: UnfollowUserInput!): UnfollowUserPayload
+
+  """
+  The API to register a new user
+  """
+  register(dateOfBirth: String, email: String!, firstName: String!, lastName: String!, phoneNumber: String!, password1: String!, password2: String!): Register
+
+  """
+  Verify user account.
+
+  Receive the token that was sent by email.
+  If the token is valid, make the user verified
+  by making the `user.status.verified` field true.
+  """
+  verifyAccount(token: String!): VerifyAccount
+
+  """
+  Sends activation email.
+
+  It is called resend because theoretically
+  the first activation email was sent when
+  the user registered.
+
+  If there is no user with the requested email,
+  a successful response is returned.
+  """
+  resendActivationEmail(email: String!): ResendActivationEmail
+
+  """
+  Send password reset email.
+
+  For non verified users, send an activation
+  email instead.
+
+  Accepts both primary and secondary email.
+
+  If there is no user with the requested email,
+  a successful response is returned.
+  """
+  sendPasswordResetEmail(email: String!): SendPasswordResetEmail
+
+  """
+  Change user password without old password.
+
+  Receive the token that was sent by email.
+
+  If token and new passwords are valid, update
+  user password and in case of using refresh
+  tokens, revoke all of them.
+
+  Also, if user has not been verified yet, verify it.
+  """
+  passwordReset(token: String!, newPassword1: String!, newPassword2: String!): PasswordReset
+
+  """
+  Change account password when user knows the old password.
+
+  A new token and refresh token are sent. User must be verified.
+  """
+  passwordChange(oldPassword: String!, newPassword1: String!, newPassword2: String!): PasswordChange
+
+  """
+  Archive account and revoke refresh tokens.
+
+  User must be verified and confirm password.
+  """
+  archiveAccount(password: String!): ArchiveAccount
+
+  """
+  Delete account permanently or make `user.is_active=False`.
+
+  The behavior is defined on settings.
+  Anyway user refresh tokens are revoked.
+
+  User must be verified and confirm password.
+  """
+  deleteAccount(password: String!): DeleteAccount
+
+  tokenAuth(password: String!, email: String, username: String): ObtainJSONWebTokenCustomUser
+
+  """
+  Same as `grapgql_jwt` implementation, with standard output.
+  """
+  verifyToken(token: String!): VerifyToken
+
+  """
+  Same as `grapgql_jwt` implementation, with standard output.
+  """
+  refreshToken(refreshToken: String!): RefreshToken
+
+  """
+  Same as `grapgql_jwt` implementation, with standard output.
+  """
+  revokeToken(refreshToken: String!): RevokeToken
+
+  """
+  Add a Studio/Production Company
+  """
+  addStudio(input: AddStudioInput!): AddStudioPayload
+
+  """
+  Add a Work Experince
+  """
+  addWorkExprience(input: AddWorkExperienceInput!): AddWorkExperiencePayload
+
+  """
+  Delete a Work Experience
+  """
+  deleteWorkExperience(input: DeleteWorkExperienceInput!): DeleteWorkExperiencePayload
+
+  """
+  Delete a Studio associated with a User
+  """
+  deleteStudio(input: DeleteStudioInput!): DeleteStudioPayload
+
+  blockUser(input: BlockUserInput!): BlockUserPayload
+
+  unblockUser(input: UnblockUserInput!): UnblockUserPayload
+
+  subscribeProjectNotifications(input: SubscribeToUserNewProjectNotificationsInput!): SubscribeToUserNewProjectNotificationsPayload
+
+  unsubscribeProjectNotications(input: UnSubscribeProjectNotificationsInput!): UnSubscribeProjectNotificationsPayload
+
+  updateAccount(avatar: Upload, bio: String, birthday: Date, cover: Upload, email: String, location: String, name: String, username: String, visibility: String): UpdateAuthenticatedUser
+
+  updateNotificationsSettings(input: UpdateAuthenticatedUserNotificationsSettingsInput!): UpdateAuthenticatedUserNotificationsSettingsPayload
+}
+
+type CreateInvestorAccountPayload {
+  status: Int
+
+  user: GetAuthenticatedUserNode
+
+  clientMutationId: String
+}
+
+input CreateInvestorAccountInput {
+  domicile: String!
+
+  firstName: String!
+
+  middleInitial: String
+
+  lastName: String!
+
+  dob: String!
+
+  phoneNumber: String
+
+  country: String!
+
+  address1: String!
+
+  address2: String
+
+  city: String!
+
+  state: String!
+
+  zipCode: String!
+
+  email: String!
+
+  ssn: String
+
+  annualIncome: Int
+
+  netWorth: Int
+
+  accreditedStatus: Boolean
+
+  clientMutationId: String
+}
+
+type AddPartyDocument {
+  status: Int
+
+  message: String
+}
+
+"""
+Create scalar that ignores normal serialization/deserialization, since
+that will be handled by the multipart request spec
+"""
+scalar Upload
+
+type CreateTradePayload {
+  status: Int
+
+  message: String
+
+  clientMutationId: String
+}
+
+input CreateTradeInput {
+  offeringId: ID!
+
+  accountId: String!
+
+  transactionType: String!
+
+  transactionUnits: Float!
+
+  clientMutationId: String
+}
+
+type CCFundMovementPayload {
+  status: Int
+
+  transactionDetails: JSONString
+
+  clientMutationId: String
+}
+
+input CCFundMovementInput {
+  """
+  Account ID that is generated by the API once an account is created (createAccount)
+  """
+  accountId: String!
+
+  """
+  Trade ID that is generated by the API once a trade is created (createTrade)
+  """
+  tradeId: String!
+
+  """
+  The transactional amount that should be moved
+  """
+  amount: String!
+
+  clientMutationId: String
+}
+
+type FundReturnRequestPayload {
+  status: Int
+
+  response: JSONString
+
+  clientMutationId: String
+}
+
+input FundReturnRequestInput {
+  tradeId: ID!
+
+  requestedBy: String!
+
+  reason: String!
+
+  clientMutationId: String
+}
+
+type AddProjectMedia {
+  status: Int
+
+  message: String
+}
+
+type AddProjectRatingPayload {
+  status: Int
+
+  project: ProjectRatingNode
+
+  clientMutationId: String
+}
+
+input AddProjectRatingInput {
+  id: ID!
+
+  emojiId: ID
+
+  clientMutationId: String
+}
+
+type ProjectRatingItemPayload {
+  status: Int
+
+  message: String
+
+  clientMutationId: String
+}
+
+input ProjectRatingItemInput {
+  projectId: ID!
+
+  clientMutationId: String
+}
+
+type DeleteProjectItemPayload {
+  status: Int
+
+  message: String
+
+  clientMutationId: String
+}
+
+input DeleteProjectItemInput {
+  projectId: ID!
+
+  clientMutationId: String
+}
+
+type UpdateProjectItemPayload {
+  status: Int
+
+  project: AuthenticatedUserEditProjectNode
+
+  clientMutationId: String
+}
+
+type AuthenticatedUserEditProjectNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  uuid: UUID!
+
+  title: String
+
+  description: String
+
+  isEdited: Boolean!
+}
+
+input UpdateProjectItemInput {
+  id: ID!
+
+  title: String
+
+  description: String
+
+  clientMutationId: String
+}
+
+type CreateProject {
+  status: Int
+
+  project: AuthenticatedUserProjectNode
+}
+
+type AddToWatchListPayload {
+  status: Int
+
+  project: WatchlistProjectNode
+
+  clientMutationId: String
+}
+
+type WatchlistProjectNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  watchlisted: Boolean
+}
+
+input AddToWatchListInput {
+  projectId: ID!
+
+  clientMutationId: String
+}
+
+type AddAttachment {
+  status: Int
+
+  message: String
+}
+
+type RemoveFromWatchlistPayload {
+  status: Int
+
+  project: WatchlistProjectNode
+
+  clientMutationId: String
+}
+
+input RemoveFromWatchlistInput {
+  projectId: ID!
+
+  clientMutationId: String
+}
+
+type CreateProjectCommentPayload {
+  status: Int
+
+  projectComment: ProjectCommentNode
+
+  clientMutationId: String
+}
+
+input CreateProjectCommentInput {
+  projectId: ID!
+
+  commentText: String
+
+  clientMutationId: String
+}
+
+type UpdateCommentItemPayload {
+  status: Int
+
+  projectComment: GetProjectCommentNode
+
+  clientMutationId: String
+}
+
+input UpdateCommentItemInput {
+  commentId: ID
+
+  commentText: String
+
+  clientMutationId: String
+}
+
+type DeleteCommentItemPayload {
+  status: Int
+
+  message: String
+
+  clientMutationId: String
+}
+
+input DeleteCommentItemInput {
+  commentId: ID!
+
+  clientMutationId: String
+}
+
+type ProjectCommentReplyPayload {
+  status: Int
+
+  projectCommentReply: ProjectCommentReplyNode
+
+  clientMutationId: String
+}
+
+input ProjectCommentReplyInput {
+  projectId: ID!
+
+  commentId: ID!
+
+  commentText: String
+
+  clientMutationId: String
+}
+
+type RequestToFollowUserPayload {
+  status: Int
+
+  followRequest: CommonFollowRequestNode
+
+  clientMutationId: String
+}
+
+input RequestToFollowUserInput {
+  id: ID!
+
+  clientMutationId: String
+}
+
+type CancelRequestToFollowUserPayload {
+  status: Int
+
+  targetUser: CommonPublicUserNode
+
+  clientMutationId: String
+}
+
+input CancelRequestToFollowUserInput {
+  id: ID!
+
+  clientMutationId: String
+}
+
+type ApproveUserFollowRequestPayload {
+  status: Int
+
+  targetUser: CommonPublicUserNode
+
+  clientMutationId: String
+}
+
+input ApproveUserFollowRequestInput {
+  id: ID!
+
+  clientMutationId: String
+}
+
+type RejectUserFollowRequestPayload {
+  status: Int
+
+  targetUser: CommonPublicUserNode
+
+  clientMutationId: String
+}
+
+input RejectUserFollowRequestInput {
+  id: ID!
+
+  clientMutationId: String
+}
+
+type FollowUserPayload {
+  status: Int
+
+  follow: FollowNode
+
+  clientMutationId: String
+}
+
+type FollowNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  followedUser: FollowUserNode
+}
+
+type FollowUserNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  """
+  Required. 30 characters or fewer. Letters, digits and _ only.
+  """
+  username: String!
+
+  isFollowing: Boolean
+}
+
+input FollowUserInput {
+  id: ID!
+
+  clientMutationId: String
+}
+
+type UnfollowUserPayload {
+  status: Int
+
+  unfollow: FollowUserNode
+
+  clientMutationId: String
+}
+
+input UnfollowUserInput {
+  id: ID!
+
+  clientMutationId: String
+}
+
+"""
+The API to register a new user
+"""
+type Register {
+  success: Boolean
+
+  errors: ExpectedErrorType
+
+  refreshToken: String
+
+  token: String
+}
+
+"""
+    Errors messages and codes mapped to
+    fields or non fields errors.
+    Example:
+    {
+        field_name: [
+            {
+                "message": "error message",
+                "code": "error_code"
+            }
+        ],
+        other_field: [
+            {
+                "message": "error message",
+                "code": "error_code"
+            }
+        ],
+        nonFieldErrors: [
+            {
+                "message": "error message",
+                "code": "error_code"
+            }
+        ]
+    }
+    
+"""
+scalar ExpectedErrorType
+
+"""
+Verify user account.
+
+Receive the token that was sent by email.
+If the token is valid, make the user verified
+by making the `user.status.verified` field true.
+"""
+type VerifyAccount {
+  success: Boolean
+
+  errors: ExpectedErrorType
+}
+
+"""
+Sends activation email.
+
+It is called resend because theoretically
+the first activation email was sent when
+the user registered.
+
+If there is no user with the requested email,
+a successful response is returned.
+"""
+type ResendActivationEmail {
+  success: Boolean
+
+  errors: ExpectedErrorType
+}
+
+"""
+Send password reset email.
+
+For non verified users, send an activation
+email instead.
+
+Accepts both primary and secondary email.
+
+If there is no user with the requested email,
+a successful response is returned.
+"""
+type SendPasswordResetEmail {
+  success: Boolean
+
+  errors: ExpectedErrorType
+}
+
+"""
+Change user password without old password.
+
+Receive the token that was sent by email.
+
+If token and new passwords are valid, update
+user password and in case of using refresh
+tokens, revoke all of them.
+
+Also, if user has not been verified yet, verify it.
+"""
+type PasswordReset {
+  success: Boolean
+
+  errors: ExpectedErrorType
+}
+
+"""
+Change account password when user knows the old password.
+
+A new token and refresh token are sent. User must be verified.
+"""
+type PasswordChange {
+  success: Boolean
+
+  errors: ExpectedErrorType
+
+  refreshToken: String
+
+  token: String
+}
+
+"""
+Archive account and revoke refresh tokens.
+
+User must be verified and confirm password.
+"""
+type ArchiveAccount {
+  success: Boolean
+
+  errors: ExpectedErrorType
+}
+
+"""
+Delete account permanently or make `user.is_active=False`.
+
+The behavior is defined on settings.
+Anyway user refresh tokens are revoked.
+
+User must be verified and confirm password.
+"""
+type DeleteAccount {
+  success: Boolean
+
+  errors: ExpectedErrorType
+}
+
+type ObtainJSONWebTokenCustomUser {
+  token: String
+
+  success: Boolean
+
+  errors: ExpectedErrorType
+
+  user: GetAuthenticatedUserNode
+
+  unarchiving: Boolean
+
+  refreshToken: String
+}
+
+"""
+Same as `grapgql_jwt` implementation, with standard output.
+"""
+type VerifyToken {
+  payload: GenericScalar
+
+  success: Boolean
+
+  errors: ExpectedErrorType
+}
+
+"""
+The `GenericScalar` scalar type represents a generic
+GraphQL scalar value that could be:
+String, Boolean, Int, Float, List or Object.
+"""
+scalar GenericScalar
+
+"""
+Same as `grapgql_jwt` implementation, with standard output.
+"""
+type RefreshToken {
+  token: String
+
+  payload: GenericScalar
+
+  success: Boolean
+
+  errors: ExpectedErrorType
+
+  refreshToken: String
+}
+
+"""
+Same as `grapgql_jwt` implementation, with standard output.
+"""
+type RevokeToken {
+  revoked: Int
+
+  success: Boolean
+
+  errors: ExpectedErrorType
+}
+
+type AddStudioPayload {
+  status: Int
+
+  studio: UserStudioNode
+
+  clientMutationId: String
+}
+
+input AddStudioInput {
+  name: String!
+
+  email: String!
+
+  roleId: ID!
+
+  imdb: String
+
+  linkedin: String
+
+  clientMutationId: String
+}
+
+type AddWorkExperiencePayload {
+  status: Int
+
+  workExperience: WorkExperiencesNode
+
+  clientMutationId: String
+}
+
+input AddWorkExperienceInput {
+  title: String!
+
+  company: String!
+
+  location: String
+
+  isActive: Boolean
+
+  beginDate: Date!
+
+  endDate: Date
+
+  clientMutationId: String
+}
+
+type DeleteWorkExperiencePayload {
+  status: Int
+
+  message: String
+
+  clientMutationId: String
+}
+
+input DeleteWorkExperienceInput {
+  jobId: ID!
+
+  clientMutationId: String
+}
+
+type DeleteStudioPayload {
+  status: Int
+
+  message: String
+
+  clientMutationId: String
+}
+
+input DeleteStudioInput {
+  studioId: ID!
+
+  clientMutationId: String
+}
+
+type BlockUserPayload {
+  status: Int
+
+  blocked: GetBlockedUserNode
+
+  clientMutationId: String
+}
+
+type GetBlockedUserNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  isBlocked: Boolean
+
+  isFollowing: Boolean
+
+  areNewProjectNotificationsEnabled: Boolean
+}
+
+input BlockUserInput {
+  id: ID!
+
+  clientMutationId: String
+}
+
+type UnblockUserPayload {
+  status: Int
+
+  unblocked: GetBlockedUserNode
+
+  clientMutationId: String
+}
+
+input UnblockUserInput {
+  id: ID!
+
+  clientMutationId: String
+}
+
+type SubscribeToUserNewProjectNotificationsPayload {
+  status: Int
+
+  user: SubscribeToUserNewProjectNotificationsUserNode
+
+  clientMutationId: String
+}
+
+type SubscribeToUserNewProjectNotificationsUserNode implements Node {
+  """
+  The ID of the object.
+  """
+  id: ID!
+
+  areNewProjectNotificationsEnabled: Boolean
+}
+
+input SubscribeToUserNewProjectNotificationsInput {
+  id: ID!
+
+  clientMutationId: String
+}
+
+type UnSubscribeProjectNotificationsPayload {
+  status: Int
+
+  user: SubscribeToUserNewProjectNotificationsUserNode
+
+  clientMutationId: String
+}
+
+input UnSubscribeProjectNotificationsInput {
+  id: ID!
+
+  clientMutationId: String
+}
+
+type UpdateAuthenticatedUser {
+  status: Int
+
+  user: GetAuthenticatedUserNode
+}
+
+type UpdateAuthenticatedUserNotificationsSettingsPayload {
+  status: Int
+
+  notifications: AuthenticatedUserNotificationsSettingsNode
+
+  clientMutationId: String
+}
+
+input UpdateAuthenticatedUserNotificationsSettingsInput {
+  projectRatingNotifications: Boolean
+
+  followNotifications: Boolean
+
+  followRequestNotifications: Boolean
+
+  followRequestApprovedNotifications: Boolean
+
+  userNewProjectNotifications: Boolean
+
+  clientMutationId: String
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}
